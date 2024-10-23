@@ -1,0 +1,31 @@
+def decodeString(s: str) -> str:
+    stack_num = []  # Стек для зберігання чисел (кратності)
+    stack_str = []  # Стек для зберігання частин рядка
+    current_num = 0  # Поточне число
+    current_str = ""  # Поточна частина рядка
+
+    for char in s:
+        if char.isdigit():
+            # Якщо символ - цифра, оновлюємо поточне число
+            current_num = current_num * 10 + int(char)
+        elif char == '[':
+            # Коли зустрічаємо '[', зберігаємо поточну частину рядка і число
+            stack_num.append(current_num)
+            stack_str.append(current_str)
+            current_num = 0  # Скидаємо поточне число
+            current_str = ""  # Скидаємо поточну частину рядка
+        elif char == ']':
+            # Коли зустрічаємо ']', декодуємо частину рядка
+            prev_str = stack_str.pop()  # Отримуємо попередню частину рядка
+            repeat_count = stack_num.pop()  # Отримуємо кратність
+            current_str = prev_str + current_str * repeat_count  # Формуємо нову частину рядка
+        else:
+            # Якщо символ - літера, додаємо його до поточної частини рядка
+            current_str += char
+
+    return current_str
+
+# Приклади використання
+print(decodeString("3[a]2[bc]"))      # Виведе: "aaabcbc"
+print(decodeString("3[a2[c]]"))        # Виведе: "accaccacc"
+print(decodeString("2[abc]3[cd]ef"))   # Виведе: "abcabccdcdcdef"
