@@ -1,0 +1,35 @@
+class MinStack:
+
+    def __init__(self):
+        self.stack = []  # Основний стек для зберігання значень
+        self.min_stack = []  # Стек для зберігання мінімальних значень
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)  # Додаємо значення до основного стека
+        # Якщо стек мінімумів порожній або нове значення менше або рівне верхньому, додаємо його
+        if not self.min_stack or val <= self.min_stack[-1]:
+            self.min_stack.append(val)
+
+    def pop(self) -> None:
+        if self.stack:
+            top_value = self.stack.pop()  # Видаляємо верхній елемент з основного стека
+            # Якщо видалене значення є верхнім значенням стека мінімумів, видаляємо його звідти
+            if top_value == self.min_stack[-1]:
+                self.min_stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1] if self.stack else None  # Повертаємо верхній елемент основного стека
+
+    def getMin(self) -> int:
+        return self.min_stack[-1] if self.min_stack else None  # Повертаємо верхній елемент стека мінімумів
+
+
+# Приклад використання
+minStack = MinStack()
+minStack.push(-2)
+minStack.push(0)
+minStack.push(-3)
+print(minStack.getMin())  # Виведе: -3
+minStack.pop()
+print(minStack.top())      # Виведе: 0
+print(minStack.getMin())   # Виведе: -2
