@@ -1,0 +1,25 @@
+def isValid(s: str) -> bool:
+    # Відкриті та закриті дужки
+    bracket_map = {')': '(', '}': '{', ']': '['}
+    stack = []
+    
+    # Проходимо кожен символ у рядку
+    for char in s:
+        # Якщо символ закрита дужка
+        if char in bracket_map:
+            # Витягуємо верхню дужку зі стека, якщо стек не порожній, інакше присвоюємо None
+            top_element = stack.pop() if stack else None
+            # Перевіряємо, чи відповідна відкриття дужка
+            if bracket_map[char] != top_element:
+                return False
+        else:
+            # Якщо символ - відкрита дужка, додаємо його до стека
+            stack.append(char)
+    
+    # Стек повинен бути порожнім, якщо всі дужки валідні
+    return not stack
+
+# Приклади
+print(isValid("()"))       # Виведе: True
+print(isValid("()[]{}"))   # Виведе: True
+print(isValid("(]"))       # Виведе: False
