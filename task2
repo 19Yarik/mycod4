@@ -1,0 +1,34 @@
+# Визначаємо клас для вузла бінарного дерева
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+# Функція для обходу дерева в порядку
+def inorderTraversal(root):
+    result = []
+
+    def traverse(node):
+        if node is not None:
+            traverse(node.left)   # Обходимо ліве піддерево
+            result.append(node.val)  # Додаємо значення вузла
+            traverse(node.right)  # Обходимо праве піддерево
+
+    traverse(root)
+    return result
+
+# Приклади
+# Приклад 1
+root1 = TreeNode(1)
+root1.right = TreeNode(2)
+root1.right.left = TreeNode(3)
+print(inorderTraversal(root1))  # Виведе: [1, 3, 2]
+
+# Приклад 2
+root2 = None
+print(inorderTraversal(root2))  # Виведе: []
+
+# Приклад 3
+root3 = TreeNode(1)
+print(inorderTraversal(root3))  # Виведе: [1]
