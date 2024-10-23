@@ -1,0 +1,33 @@
+class MyQueue:
+
+    def __init__(self):
+        self.stack1 = []  # Основний стек для зберігання елементів
+        self.stack2 = []  # Другий стек для зворотного порядку елементів
+
+    def push(self, x: int) -> None:
+        self.stack1.append(x)  # Додаємо елемент до першого стека
+
+    def pop(self) -> int:
+        self.move()  # Переміщуємо елементи, якщо потрібно
+        return self.stack2.pop()  # Видаляємо верхній елемент з другого стека
+
+    def peek(self) -> int:
+        self.move()  # Переміщуємо елементи, якщо потрібно
+        return self.stack2[-1]  # Повертаємо верхній елемент другого стека
+
+    def empty(self) -> bool:
+        return not self.stack1 and not self.stack2  # Перевіряємо, чи обидва стеки порожні
+
+    def move(self) -> None:
+        if not self.stack2:  # Якщо другий стек порожній
+            while self.stack1:  # Переміщуємо елементи з першого стека до другого
+                self.stack2.append(self.stack1.pop())
+
+
+# Приклад використання
+myQueue = MyQueue()
+myQueue.push(1)  # Черга: [1]
+myQueue.push(2)  # Черга: [1, 2]
+print(myQueue.peek())  # Виведе: 1
+print(myQueue.pop())    # Виведе: 1, черга: [2]
+print(myQueue.empty())  # Виведе: False
