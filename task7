@@ -1,0 +1,21 @@
+def longestValidParentheses(s: str) -> int:
+    stack = [-1]  # Стек для зберігання індексів
+    max_length = 0  # Максимальна довжина дійсних дужок
+
+    for i, char in enumerate(s):
+        if char == '(':
+            stack.append(i)  # Додаємо індекс відкритої дужки
+        else:
+            stack.pop()  # Видаляємо верхній елемент (індекс відкритої дужки)
+            if not stack:
+                stack.append(i)  # Додаємо індекс закритої дужки
+            else:
+                # Обчислюємо довжину дійсних дужок
+                max_length = max(max_length, i - stack[-1])
+
+    return max_length
+
+# Приклади використання
+print(longestValidParentheses("(()"))        # Виведе: 2
+print(longestValidParentheses(")()())"))     # Виведе: 4
+print(longestValidParentheses(""))            # Виведе: 0
