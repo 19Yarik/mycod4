@@ -1,0 +1,27 @@
+def evalRPN(tokens) -> int:
+    stack = []
+
+    for token in tokens:
+        if token in ['+', '-', '*', '/']:
+            b = stack.pop()  # Останній елемент
+            a = stack.pop()  # Передостанній елемент
+            
+            if token == '+':
+                stack.append(a + b)
+            elif token == '-':
+                stack.append(a - b)
+            elif token == '*':
+                stack.append(a * b)
+            elif token == '/':
+                # Для цілочисельного ділення використовуємо floor division
+                # з урахуванням від'ємних чисел
+                stack.append(int(a / b))  # Використання int() для скорочення до нуля
+        else:
+            stack.append(int(token))  # Додаємо число у стек
+
+    return stack[0]  # Повертаємо результат
+
+# Приклади використання
+print(evalRPN(["2","1","+","3","*"]))      # Виведе: 9
+print(evalRPN(["4","13","5","/","+"]))     # Виведе: 6
+print(evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"]))  # Виведе: 22
